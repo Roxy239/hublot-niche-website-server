@@ -4,6 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 const watchHandler = require('./watchHandler/watchHandler');
 const orderHandler = require('./orderHandler/orderHandler');
+const reviewHandler = require('./reviewHandler/reviewHandler');
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -30,6 +31,7 @@ mongoose.connect(uri)
 
 app.use('/watches', watchHandler);
 app.use('/orders', orderHandler);
+app.use('/reviews', reviewHandler);
 
 app.listen(port, () => {
     console.log(`Application is runnig at port ${port}\nhttp://localhost:${port}`)
