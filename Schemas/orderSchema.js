@@ -24,9 +24,9 @@ const orderSchema = mongoose.Schema({
 
     status: {
         type: String,
+        enum: ["pending", "shipped", "cancelled"],
         default: "pending"
     }
-
 });
 
 module.exports = orderSchema;
