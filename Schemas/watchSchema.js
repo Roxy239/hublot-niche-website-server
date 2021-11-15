@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const watchSchema = mongoose.Schema({
     key: {
-        type: Number,
-        required: true
+        type: Number
     },
     name: {
         type: String,

@@ -8,6 +8,21 @@ const User = new mongoose.model("User", userSchema);
 const router = express.Router();
 
 
+router.get('/alluser', (req, res) => {
+    User.find({/* status: 'active' */ }, (err, data) => {
+        if (err) {
+            res.status(500).json({
+                error: "There was a server side error."
+            });
+            console.log(err);
+        }
+        else {
+            res.status(200).json(data);
+        }
+    });
+});
+
+
 router.get('/', (req, res) => {
     let condition = {}
     if (req.query.email) {
@@ -25,6 +40,31 @@ router.get('/', (req, res) => {
         }
     });
 });
+
+
+//make admin
+router.get('/makeadmin/:id', (req, res) => {
+
+    User.updateOne({ _id: req.params.id }, {
+        $set: {
+            role: "admin"
+        }
+    }, (err) => {
+        if (err) {
+            res.status(500).json({
+                error: "There was a server side error."
+            });
+            console.log(err);
+        }
+        else {
+            res.status(200).json({
+                message: "User was updated successfully!"
+            });
+        }
+    });
+});
+
+
 
 
 router.get('/:id', (req, res) => {

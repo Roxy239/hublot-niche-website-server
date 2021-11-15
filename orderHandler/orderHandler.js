@@ -73,6 +73,30 @@ router.post('/', (req, res) => {
     });
 });
 
+// accept order
+router.get('/accept/:id', (req, res) => {
+
+    Order.updateOne({ _id: req.params.id }, {
+        $set: {
+            status: "shipped"
+        }
+    }, (err) => {
+        if (err) {
+            res.status(500).json({
+                error: "There was a server side error."
+            });
+            console.log(err);
+        }
+        else {
+            res.status(200).json({
+                message: "Order was updated successfully!"
+            });
+        }
+    });
+});
+
+
+
 //cancel order
 router.get('/cancel/:id', (req, res) => {
 
