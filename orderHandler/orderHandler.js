@@ -113,7 +113,7 @@ router.get('/cancel/:id', (req, res) => {
         }
         else {
             res.status(200).json({
-                message: "Order was updated successfully!"
+                message: "Order was cancelled successfully!"
             });
         }
     });
