@@ -7,44 +7,50 @@ const User = new mongoose.model("User", userSchema);
 
 const router = express.Router();
 
-router.get('/', (req, res)=>{
-User.find({/* status: 'active' */}, (err, data)=>{
-        if(err){
+
+router.get('/', (req, res) => {
+    let condition = {}
+    if (req.query.email) {
+        condition = { email: req.query.email }
+    }
+    User.find(condition, (err, data) => {
+        if (err) {
             res.status(500).json({
                 error: "There was a server side error."
             });
             console.log(err);
         }
-        else{
+        else {
             res.status(200).json(data);
         }
     });
 });
 
-router.get('/:id', (req, res)=>{
-    User.find({ _id: req.params.id }, (err, data)=>{
-        if(err){
+
+router.get('/:id', (req, res) => {
+    User.find({ _id: req.params.id }, (err, data) => {
+        if (err) {
             res.status(500).json({
                 error: "There was a server side error."
             });
             console.log(err);
         }
-        else{
+        else {
             res.status(200).json(data);
         }
     });
 });
 
-router.post('/', (req, res)=>{
+router.post('/', (req, res) => {
     const newUser = new User(req.body);
-    newUser.save((err)=>{
-        if(err){
+    newUser.save((err) => {
+        if (err) {
             res.status(500).json({
                 error: "There was a server side error."
             });
             console.log(err);
         }
-        else{
+        else {
             res.status(200).json({
                 message: "User was inserted successfully!"
             });
@@ -52,15 +58,15 @@ router.post('/', (req, res)=>{
     });
 });
 
-router.post('/all', (req, res)=>{
-    User.insertMany(req.body, (err)=>{
-        if(err){
+router.post('/all', (req, res) => {
+    User.insertMany(req.body, (err) => {
+        if (err) {
             res.status(500).json({
                 error: "There was a server side error."
             });
             console.log(err);
         }
-        else{
+        else {
             res.status(200).json({
                 message: "User were inserted successfully!"
             });
@@ -69,19 +75,19 @@ router.post('/all', (req, res)=>{
 
 });
 
-router.put('/:id', (req, res)=>{
-    User.updateOne({ _id: req.params.id },{
+router.put('/:id', (req, res) => {
+    User.updateOne({ _id: req.params.id }, {
         $set: {
             role: "admin"
         }
-    }, (err)=>{
-        if(err){
+    }, (err) => {
+        if (err) {
             res.status(500).json({
                 error: "There was a server side error."
             });
             console.log(err);
         }
-        else{
+        else {
             res.status(200).json({
                 message: "User was updated successfully!"
             });
@@ -89,15 +95,15 @@ router.put('/:id', (req, res)=>{
     });
 });
 
-router.delete('/:id', (req, res)=>{
-    User.deleteOne({ _id: req.params.id }, (err)=>{
-        if(err){
+router.delete('/:id', (req, res) => {
+    User.deleteOne({ _id: req.params.id }, (err) => {
+        if (err) {
             res.status(500).json({
                 error: "There was a server side error."
             });
             console.log(err);
         }
-        else{
+        else {
             res.status(200).json({
                 message: "User was deleted successfully!"
             });

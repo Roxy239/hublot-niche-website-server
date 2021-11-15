@@ -25,6 +25,23 @@ router.get('/', (req, res) => {
     });
 });
 
+
+router.get('/adminall', (req, res) => {
+
+    Order.find({}, (err, data) => {
+        if (err) {
+            res.status(500).json({
+                error: "There was a server side error."
+            });
+            console.log(err);
+        }
+        else {
+            res.status(200).json(data);
+        }
+    });
+});
+
+
 router.get('/:id', (req, res) => {
     Order.find({ _id: req.params.id }, (err, data) => {
         if (err) {
